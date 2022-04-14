@@ -7,6 +7,12 @@ import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 
+import "./task/approve"
+import "./task/mint"
+import "./task/transfer"
+import "./task/transferFrom"
+
+
 dotenv.config();
 
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -29,7 +35,10 @@ const config: HardhatUserConfig = {
       url: process.env.ALCHEMY_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    },
+    }, 
+    localhost: {
+      url: "http://127.0.0.1:8545"
+    }
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
@@ -37,7 +46,9 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API,
-  },
+  }
 };
 
-export default config;
+export default {
+  solidity: "0.8.4"
+};
