@@ -14,3 +14,7 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
+
+export default {
+  solidity: "0.8.4"
+};

@@ -1,7 +1,7 @@
 {
   "name": "erc-20_token",
   "version": "1.0.0",
-  "description": "My first erc-20 token",
+  "description": "My first erc20 token",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,19 +16,17 @@
     "url": "https://github.com/zerephe/erc-20_token/issues"
   },
   "homepage": "https://github.com/zerephe/erc-20_token#readme",
-  "dependencies": {
-    "hardhat": "^2.9.3"
-  },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@typechain/hardhat": "^6.0.0",
-    "@types/chai": "^4.3.0",
+    "@types/chai": "^4.3.1",
     "@types/mocha": "^9.1.0",
-    "@types/node": "^17.0.23",
+    "@types/node": "^17.0.24",
     "chai": "^4.3.6",
     "dotenv": "^16.0.0",
+    "hardhat": "^2.1.2",
     "hardhat-gas-reporter": "^1.0.8",
     "solidity-coverage": "^0.7.20",
     "ts-node": "^10.7.0",

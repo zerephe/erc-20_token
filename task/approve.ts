@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
-import { HardhatUserConfig, task } from "hardhat/config";
-import {abi} from '../artifacts/contracts/VolkovCoin.sol/VolkovCoin.json';
+import { task } from "hardhat/config";
+import { abi } from '../artifacts/contracts/VolkovCoin.sol/VolkovCoin.json';
 
 dotenv.config();
 
