@@ -25,6 +25,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 const config: HardhatUserConfig = {
   solidity: "0.8.4",
+  defaultNetwork: "hardhat",
   networks: {
     hardhat: {
       chainId: 1337,
@@ -33,15 +34,16 @@ const config: HardhatUserConfig = {
       url: "http://127.0.0.1:8545",
     },
     rinkeby: {
-      url: process.env.ALCHEMY_URL,
       accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      chainId: 4,
+      url: process.env.ALCHEMY_URL,
     },
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API,
+    apiKey: {
+      rinkeby: process.env.ETHERSCAN_API,
+    },
   },
 };
 
-export default {
-  solidity: "0.8.4",
-};
+export default config;
