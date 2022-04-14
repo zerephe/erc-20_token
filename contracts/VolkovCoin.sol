@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 import "./IERC20.sol";
 
-contract VolkonCoin is IERC20{
+contract VolkovCoin is IERC20{
 
     address private contractOwner;
     uint256 public totalSupply;
@@ -10,7 +10,7 @@ contract VolkonCoin is IERC20{
     string public symbol;
     uint8 public constant DECIMAL = 18;
 
-    mapping(address => uint256) public balanceOf;
+    mapping(address => uint256) public balances;
     mapping(address => mapping(address => uint256)) public allowed;
 
     constructor(string memory _name, string memory _symbol){
@@ -19,32 +19,66 @@ contract VolkonCoin is IERC20{
         contractOwner = msg.sender;
     }
 
+    function owner() public view returns(address){
+        return contractOwner;
+    }
+
+    /* 
+        Getter functions below can be deleted
+        They were created only for testing
+    */
+    //From this:
+    function getTotalSupply() public view returns(uint256){
+        return totalSupply;
+    }
+
+    function decimals() public pure returns(uint256){
+        return DECIMAL;
+    }
+
+    function balanceOf(address balanceChecker) public view returns(uint256){
+        return balances[balanceChecker];
+    }
+
+    function allowance(address spender) public view returns(uint256){
+        return allowed[msg.sender][spender];
+    }
+
+    function getName() public view returns(string memory) {
+        return name;
+    }
+
+    function getSymbol() public view returns(string memory) {
+        return symbol;
+    }
+    //:to this
+    
     modifier ownerOnly {
         require(msg.sender == contractOwner, "Access denied!");
         _;
     } 
 
     function _mint(uint256 amount) external ownerOnly{
-        balanceOf[contractOwner] += amount;
+        balances[contractOwner] += amount;
         totalSupply += amount;
-        
+
         emit Transfer(address(0), contractOwner, amount);
     }
 
     function _burn(uint256 amount) external {
-        require(balanceOf[msg.sender] >= amount, "Burn amount higher than account balance!");
-        balanceOf[msg.sender] -= amount;
+        require(balances[msg.sender] >= amount, "Burn amount higher than balance!");
+        balances[msg.sender] -= amount;
         totalSupply -= amount;
 
         emit Transfer(msg.sender, address(0), amount);
     }
 
     function transfer(address recipient, uint256 amount) public override returns (bool){
-        require(balanceOf[msg.sender] >= amount, "Transfer amount exceeded!");
-        require(recipient != address(0), "Recipient can't be zero address");
+        require(balances[msg.sender] >= amount, "Transfer amount exceeded!");
+        require(recipient != address(0), "Recipient can't be zero address!");
 
-        balanceOf[msg.sender] -= amount;
-        balanceOf[recipient] += amount;
+        balances[msg.sender] -= amount;
+        balances[recipient] += amount;
 
         emit Transfer(msg.sender, recipient, amount);
 
@@ -52,7 +86,7 @@ contract VolkonCoin is IERC20{
     }
 
     function approve(address spender, uint256 amount) public override returns (bool){
-        require(spender != address(0), "Spender can't be zero address");
+        require(spender != address(0), "Spender can't be zero address!");
 
         allowed[msg.sender][spender] = amount;
 
@@ -62,14 +96,14 @@ contract VolkonCoin is IERC20{
     }
 
     function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool){
-        require(sender != address(0), "Spender can't be zero address");
-        require(recipient != address(0), "Recipient can't be zero address");
-        require(balanceOf[sender] >= amount, "Transfer amount exceeded!");
-        require(allowed[sender][msg.sender] >= amount, "Not enough allowance");
+        require(sender != address(0), "Sender can't be zero address!");
+        require(recipient != address(0), "Recipient can't be zero address!");
+        require(balances[sender] >= amount, "Transfer amount exceeded!");
+        require(allowed[sender][msg.sender] >= amount, "Not enough allowance!");
         
         allowed[sender][msg.sender] -=amount;
-        balanceOf[sender] -= amount;
-        balanceOf[recipient] += amount;
+        balances[sender] -= amount;
+        balances[recipient] += amount;
         
         emit Transfer(sender, recipient, amount);
 
