@@ -19,7 +19,7 @@ contract VolkovCoin is IERC20{
         contractOwner = msg.sender;
     }
 
-    function owner() public view returns(address){
+    function owner() external view returns(address){
         return contractOwner;
     }
 
@@ -28,27 +28,27 @@ contract VolkovCoin is IERC20{
         They were created only for testing
     */
     //From this:
-    function getTotalSupply() public view returns(uint256){
+    function getTotalSupply() external view returns(uint256){
         return totalSupply;
     }
 
-    function decimals() public pure returns(uint256){
+    function decimals() external pure returns(uint256){
         return DECIMAL;
     }
 
-    function balanceOf(address balanceChecker) public view returns(uint256){
+    function balanceOf(address balanceChecker) external view returns(uint256){
         return balances[balanceChecker];
     }
 
-    function allowance(address spender) public view returns(uint256){
+    function allowance(address spender) external view returns(uint256){
         return allowed[msg.sender][spender];
     }
 
-    function getName() public view returns(string memory) {
+    function getName() external view returns(string memory) {
         return name;
     }
 
-    function getSymbol() public view returns(string memory) {
+    function getSymbol() external view returns(string memory) {
         return symbol;
     }
     //:to this
@@ -73,7 +73,7 @@ contract VolkovCoin is IERC20{
         emit Transfer(msg.sender, address(0), amount);
     }
 
-    function transfer(address recipient, uint256 amount) public override returns (bool){
+    function transfer(address recipient, uint256 amount) external override returns (bool){
         require(balances[msg.sender] >= amount, "Transfer amount exceeded!");
         require(recipient != address(0), "Recipient can't be zero address!");
 
@@ -85,7 +85,7 @@ contract VolkovCoin is IERC20{
         return true;
     }
 
-    function approve(address spender, uint256 amount) public override returns (bool){
+    function approve(address spender, uint256 amount) external override returns (bool){
         require(spender != address(0), "Spender can't be zero address!");
 
         allowed[msg.sender][spender] = amount;
@@ -95,7 +95,7 @@ contract VolkovCoin is IERC20{
         return true;
     }
 
-    function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool){
+    function transferFrom(address sender, address recipient, uint256 amount) external override returns (bool){
         require(sender != address(0), "Sender can't be zero address!");
         require(recipient != address(0), "Recipient can't be zero address!");
         require(balances[sender] >= amount, "Transfer amount exceeded!");
