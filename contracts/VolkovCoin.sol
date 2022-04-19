@@ -59,10 +59,10 @@ contract VolkovCoin is IERC20{
     } 
 
     function _mint(uint256 amount) external ownerOnly{
-        balances[contractOwner] += amount;
+        balances[msg.sender] += amount;
         totalSupply += amount;
 
-        emit Transfer(address(0), contractOwner, amount);
+        emit Transfer(address(0), msg.sender, amount);
     }
 
     function _burn(uint256 amount) external {
