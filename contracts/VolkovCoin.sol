@@ -5,17 +5,18 @@ import "./IERC20.sol";
 contract VolkovCoin is IERC20{
 
     address private contractOwner;
-    uint256 public totalSupply;
     string public name;
     string public symbol;
     uint8 public constant DECIMAL = 18;
+    uint256 public totalSupply;
+
 
     mapping(address => uint256) public balances;
     mapping(address => mapping(address => uint256)) public allowed;
 
-    constructor(string memory _name, string memory _symbol){
-        name = _name;
-        symbol = _symbol;
+    constructor(){
+        name = "VolkovCoin";
+        symbol = "VLC";
         contractOwner = msg.sender;
     }
 
@@ -40,8 +41,8 @@ contract VolkovCoin is IERC20{
         return balances[balanceChecker];
     }
 
-    function allowance(address spender) external view returns(uint256){
-        return allowed[msg.sender][spender];
+    function allowance(address _owner, address spender) external view returns(uint256){
+        return allowed[_owner][spender];
     }
 
     function getName() external view returns(string memory) {

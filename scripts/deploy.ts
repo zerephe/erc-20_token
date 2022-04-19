@@ -4,7 +4,7 @@ async function main() {
 
   const [owner] = await ethers.getSigners()
   const VolkovCoin = await ethers.getContractFactory("VolkovCoin", owner);
-  const volkovToken = await VolkovCoin.deploy("VolkovCoin", "VLC");
+  const volkovToken = await VolkovCoin.deploy();
  
   await volkovToken.deployed();
 

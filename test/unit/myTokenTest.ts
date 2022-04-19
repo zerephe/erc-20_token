@@ -17,7 +17,7 @@ describe("VolkovCoin", function () {
     const Token = await ethers.getContractFactory("VolkovCoin");
     [owner, addr1, addr2] = await ethers.getSigners();
     
-    volkovToken = await Token.deploy("VolkovCoin", "VLC");
+    volkovToken = await Token.deploy();
     await volkovToken.deployed();
   });
 
