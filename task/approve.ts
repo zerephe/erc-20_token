@@ -1,6 +1,5 @@
 import * as dotenv from "dotenv";
 import { task } from "hardhat/config";
-import { abi } from '../artifacts/contracts/VolkovCoin.sol/VolkovCoin.json';
 
 dotenv.config();
 
@@ -8,13 +7,8 @@ task("approve", "Approve address to use your tokens")
   .addParam("spender", "Type here address of spender")
   .addParam("amount", "Amount of tokens")
   .setAction(async (args, hre) => {
-    const [signer] = await hre.ethers.getSigners()
     const contractAddress = process.env.CONTRACT_ADDRESS as string;
-    const volkovToken = new hre.ethers.Contract(
-      contractAddress,
-      abi,
-      signer
-    );
+    const volkovToken = await hre.ethers.getContractAt("VolkovCoin", contractAddress)
 
     const result = await volkovToken.approve(args.spender, args.amount);
     console.log(result);

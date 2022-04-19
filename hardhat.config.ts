@@ -35,14 +35,11 @@ const config: HardhatUserConfig = {
     },
     rinkeby: {
       accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-      chainId: 4,
       url: process.env.ALCHEMY_URL,
     },
   },
   etherscan: {
-    apiKey: {
-      rinkeby: process.env.ETHERSCAN_API,
-    },
+    apiKey: process.env.ETHERSCAN_API,
   },
 };
 
