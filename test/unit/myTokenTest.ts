@@ -46,14 +46,14 @@ describe("VolkovCoin", function () {
   describe("Txs", function(){
 
     it("Should have some tokens after minting", async function(){
-      await volkovToken._mint(10000);
+      await volkovToken._mint(owner.address, 10000);
       expect(await volkovToken.getTotalSupply()).to.eq(10000);
       expect(await volkovToken.balanceOf(owner.address)).to.eq(10000);
     });
 
     it("Should reduce total supply after burning", async function(){
       //Minting 10000 tokens
-      await volkovToken._mint(10000);
+      await volkovToken._mint(owner.address, 10000);
       expect(await volkovToken.getTotalSupply()).to.eq(10000);
       expect(await volkovToken.balanceOf(owner.address)).to.eq(10000);
       
@@ -64,7 +64,7 @@ describe("VolkovCoin", function () {
     });
 
     it("Should be reverted if not contract owner", async function(){
-      await expect(volkovToken.connect(addr1)._mint(10000)).to.be.revertedWith("Access denied!");
+      await expect(volkovToken.connect(addr1)._mint(addr1.address, 10000)).to.be.revertedWith("Access denied!");
     });
 
     it("Should be reverted if burn amount exeeded total supply", async function(){
@@ -72,14 +72,14 @@ describe("VolkovCoin", function () {
     });
 
     it("Should be transfered some token to specific a address", async function(){
-      await volkovToken._mint(10000);
+      await volkovToken._mint(owner.address, 10000);
       await volkovToken.transfer(addr1.address, 5000);
       expect(await volkovToken.balanceOf(owner.address)).to.eq(5000);
       expect(await volkovToken.balanceOf(addr1.address)).to.eq(5000);
     });
 
     it("Should be reverted if transfered to zero address", async function(){
-      await volkovToken._mint(10000);
+      await volkovToken._mint(owner.address, 10000);
       await expect(volkovToken.transfer(zeroAddress, 5000)).to.be.revertedWith("Recipient can't be zero address!");
     });
 
@@ -88,7 +88,7 @@ describe("VolkovCoin", function () {
     });
 
     it("Should be emitted 'Transfer' when mint, burn, or transfer", async function(){
-      await expect(volkovToken._mint(10000)).to.emit(volkovToken, 'Transfer')
+      await expect(volkovToken._mint(owner.address, 10000)).to.emit(volkovToken, 'Transfer')
                                                .withArgs(zeroAddress, owner.address, 10000);
       await expect(volkovToken._burn(5000)).to.emit(volkovToken, 'Transfer')
                                                .withArgs(owner.address, zeroAddress, 5000);
@@ -97,24 +97,24 @@ describe("VolkovCoin", function () {
     });
 
     it("Should approve allowance for specific contract", async function(){
-      await volkovToken._mint(10000);
+      await volkovToken._mint(owner.address, 10000);
       await volkovToken.approve(addr1.address, 5000);
-      expect(await volkovToken.allowance(addr1.address)).to.eq(5000);
+      expect(await volkovToken.allowance(owner.address, addr1.address)).to.eq(5000);
     });
 
     it("Should emit approval", async function(){
-      await volkovToken._mint(10000);
+      await volkovToken._mint(owner.address, 10000);
       await expect(volkovToken.approve(addr1.address, 5000)).to.emit(volkovToken, 'Approval')
                                                .withArgs(owner.address, addr1.address, 5000);
     });
 
     it("Should be reverted if zero address being approved", async function(){
-      await volkovToken._mint(10000);
+      await volkovToken._mint(owner.address, 10000);
       await expect(volkovToken.approve(zeroAddress, 1000)).to.be.revertedWith("Spender can't be zero address!");
     });
 
     it("Should transfer tokens from one to another address with owner approval", async function(){
-      await volkovToken._mint(10000);
+      await volkovToken._mint(owner.address, 10000);
       await volkovToken.transfer(addr1.address, 5000);
       await volkovToken.connect(addr1).approve(owner.address, 4000);
       await volkovToken.transferFrom(addr1.address, addr2.address, 4000);
@@ -129,13 +129,13 @@ describe("VolkovCoin", function () {
     });
 
     it("Should revert transfer if transfer amount exeeded", async function(){
-      await volkovToken._mint(10000);
+      await volkovToken._mint(owner.address, 10000);
       await volkovToken.transfer(addr1.address, 5000);
       await expect(volkovToken.transferFrom(addr1.address, addr2.address, 6000)).to.be.revertedWith("Transfer amount exceeded!");
     });
 
     it("Should revert transfer if allowance not approved", async function(){
-      await volkovToken._mint(10000);
+      await volkovToken._mint(owner.address, 10000);
       await volkovToken.transfer(addr1.address, 5000);
       await volkovToken.connect(addr1).approve(owner.address, 4000);
       await expect(volkovToken.transferFrom(addr1.address, addr2.address, 4500)).to.be.revertedWith("Not enough allowance!");
