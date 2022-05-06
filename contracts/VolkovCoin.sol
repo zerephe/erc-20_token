@@ -23,36 +23,6 @@ contract VolkovCoin is IERC20{
     function owner() external view returns(address){
         return contractOwner;
     }
-
-    /* 
-        Getter functions below can be deleted
-        They were created only for testing
-    */
-    //From this:
-    function getTotalSupply() external view returns(uint256){
-        return totalSupply;
-    }
-
-    function decimals() external pure returns(uint256){
-        return DECIMAL;
-    }
-
-    function balanceOf(address balanceChecker) external view returns(uint256){
-        return balances[balanceChecker];
-    }
-
-    function allowance(address _owner, address spender) external view returns(uint256){
-        return allowed[_owner][spender];
-    }
-
-    function getName() external view returns(string memory) {
-        return name;
-    }
-
-    function getSymbol() external view returns(string memory) {
-        return symbol;
-    }
-    //:to this
     
     modifier ownerOnly {
         require(msg.sender == contractOwner, "Access denied!");
