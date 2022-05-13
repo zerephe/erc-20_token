@@ -5,4 +5,4 @@
 
 
 **Bscscan verified**
-`https://testnet.bscscan.com/address/0xE32A6DA420A696E17AF79CEC8D962A6dc49D7055#code`
+`https://testnet.bscscan.com/address/0x2eecb87059ddfC0326829Ee86d498605Bf98600e#code`
