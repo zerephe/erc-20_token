@@ -37,9 +37,15 @@ const config: HardhatUserConfig = {
       accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
       url: process.env.ALCHEMY_URL,
     },
+    bscTestnet: {
+      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      url: process.env.BSCRPC_API,
+      chainId: 97,
+    }
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API,
+    // apiKey: process.env.ETHERSCAN_API,
+    apiKey: process.env.BSCSCAN_API,
   },
 };
 
